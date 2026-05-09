@@ -1,176 +1,225 @@
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Sparkles, Text } from '@react-three/drei';
-import { useMemo, useRef, useState } from 'react';
+import { Sparkles, Text } from '@react-three/drei';
+import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
 
 function WorkflowScene() {
-  const [scenario, setScenario] = useState(0);
-
   return (
     <div className="relative h-[680px] w-full overflow-hidden rounded-[36px] border border-white/10 bg-[#07101f]/95 shadow-soft backdrop-blur-xl md:h-[750px]">
-      <Canvas camera={{ position: [0, 1.2, 8], fov: 45 }}>
+      <Canvas camera={{ position: [0, 2.5, 14], fov: 45 }}>
         <color attach="background" args={['#02030a']} />
-        <fog attach="fog" args={['#02030a', 6, 16]} />
+        <fog attach="fog" args={['#02030a', 6, 28]} />
         <directionalLight position={[3, 4, 3]} intensity={1.3} color="#84d5ff" />
         <ambientLight intensity={0.2} />
         <pointLight position={[-3, 1.5, 2]} intensity={0.75} color="#38bdf8" />
         <pointLight position={[3, -1, 2]} intensity={0.7} color="#c084fc" />
-        <OrbitControls enableZoom={false} autoRotate={false} enablePan={false} rotateSpeed={0} />
         <Sparkles count={80} scale={8} size={1.2} speed={0.3} color="#7dd3fc" />
-        <WorkflowGraph scenario={scenario} />
+        <UnifiedWorkflowGraph />
       </Canvas>
-      <ScenarioIndicator scenario={scenario} setScenario={setScenario} />
+      <WorkflowLegend />
     </div>
   );
 }
 
-function ScenarioIndicator({ scenario, setScenario }) {
+function WorkflowLegend() {
   return (
-    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-      {['Direct Answer', 'Tool Call', 'Gap Detected', 'Self Improve'].map((label, idx) => (
-        <button
-          key={idx}
-          onClick={() => setScenario(idx)}
-          className={`px-3 py-1 text-xs font-semibold rounded-full transition ${scenario === idx ? 'bg-cyan-400 text-slate-950' : 'bg-white/10 text-cyan-300 hover:bg-white/20'}`}
-        >
-          {label}
-        </button>
-      ))}
+    <div className="absolute top-6 left-6 space-y-3 z-10">
+      <div className="text-xs uppercase tracking-[0.3em] text-cyan-300/80 font-semibold">Adaptive AI Workflow</div>
+      <div className="space-y-2 text-xs text-slate-300">
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-cyan-400" />
+          <span>Fast Path: Direct Answer</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-2 h-2 rounded-full bg-pink-400" />
+          <span>Smart Path: Self-Improvement</span>
+        </div>
+      </div>
     </div>
   );
 }
 
-function WorkflowGraph({ scenario }) {
+function UnifiedWorkflowGraph() {
   const root = useRef();
 
-  const workflows = {
-    0: {
-      name: 'Direct Answer',
-      beams: [
-        { from: [-3, 0.8, 0], to: [0, 0.8, 0], color: '#38bdf8', delay: 0 },
-        { from: [0, 0.8, 0], to: [3, 0.8, 0], color: '#22c55e', delay: 0.8 },
-      ],
-      nodes: [
-        { position: [-3, 0.8, 0], label: 'USER QUERY', detail: 'Ask a question', color: '#38bdf8' },
-        { position: [0, 0.8, 0], label: 'AI AGENT', detail: 'Has direct answer', color: '#a78bfa' },
-        { position: [3, 0.8, 0], label: 'RESPONSE', detail: 'Instant reply', color: '#22c55e' },
-      ],
-    },
-    1: {
-      name: 'Tool Call',
-      beams: [
-        { from: [-3, 0.8, 0], to: [0, 0.8, 0], color: '#38bdf8', delay: 0 },
-        { from: [0, 0.8, 0], to: [3, 0.8, 0], color: '#0ea5e9', delay: 0.8 },
-        { from: [3, 0.8, 0], to: [3, -0.8, 0], color: '#0ea5e9', delay: 1.6 },
-      ],
-      nodes: [
-        { position: [-3, 0.8, 0], label: 'USER QUERY', detail: 'Ask a question', color: '#38bdf8' },
-        { position: [0, 0.8, 0], label: 'AI AGENT', detail: 'Needs tools', color: '#a78bfa' },
-        { position: [3, 0.8, 0], label: 'TOOL CALL', detail: 'Execute APIs', color: '#0ea5e9' },
-        { position: [3, -0.8, 0], label: 'RESPONSE', detail: 'Tool output', color: '#22c55e' },
-      ],
-    },
-    2: {
-      name: 'Gap Detected',
-      beams: [
-        { from: [-3, 0.8, 0], to: [0, 0.8, 0], color: '#38bdf8', delay: 0 },
-        { from: [0, 0.8, 0], to: [1.5, -0.8, 0], color: '#f472b6', delay: 0.8 },
-        { from: [1.5, -0.8, 0], to: [3, 0.8, 0], color: '#f472b6', delay: 1.6 },
-      ],
-      nodes: [
-        { position: [-3, 0.8, 0], label: 'USER QUERY', detail: 'Ask a question', color: '#38bdf8' },
-        { position: [0, 0.8, 0], label: 'AI AGENT', detail: 'Analyzes request', color: '#a78bfa' },
-        { position: [1.5, -0.8, 0], label: 'GAP DETECTION', detail: 'Missing skill found', color: '#f472b6' },
-        { position: [3, 0.8, 0], label: 'USER NOTIFIED', detail: 'Improving now...', color: '#ff9500' },
-      ],
-    },
-    3: {
-      name: 'Self Improve & Respond',
-      beams: [
-        { from: [-3, 0.8, 0], to: [0, 0.8, 0], color: '#38bdf8', delay: 0 },
-        { from: [0, 0.8, 0], to: [1.5, -0.8, 0], color: '#f472b6', delay: 0.8 },
-        { from: [1.5, -0.8, 0], to: [-1.5, -0.8, 0], color: '#22c55e', delay: 1.6 },
-        { from: [-1.5, -0.8, 0], to: [0, -0.1, 0], color: '#22c55e', delay: 2.4 },
-      ],
-      nodes: [
-        { position: [-3, 0.8, 0], label: 'USER QUERY', detail: 'Ask a question', color: '#38bdf8' },
-        { position: [0, 0.8, 0], label: 'AI AGENT', detail: 'Analyzes request', color: '#a78bfa' },
-        { position: [1.5, -0.8, 0], label: 'GAP DETECTION', detail: 'Missing skill', color: '#f472b6' },
-        { position: [-1.5, -0.8, 0], label: 'SELF IMPROVE', detail: 'Upgrade capability', color: '#22c55e' },
-        { position: [0, -0.1, 0], label: 'ENHANCED RESPONSE', detail: 'Smart answer', color: '#c084fc' },
-      ],
-    },
+  // Complete workflow with both paths visible simultaneously
+  const workflowData = {
+    nodes: [
+      // START
+      { position: [-5.5, 2, 0], label: 'USER QUERY', detail: 'Ask a question', color: '#38bdf8', type: 'start' },
+      
+      // DECISION POINT
+      { position: [-2, 2, 0], label: 'AGENT\nANALYSIS', detail: 'Can answer?', color: '#a78bfa', type: 'decision' },
+      
+      // FAST PATH (Direct Answer)
+      { position: [1.5, 2.8, 0], label: 'HAS\nCAPABILITY', detail: 'Direct answer', color: '#22c55e', type: 'path' },
+      { position: [5.5, 2.8, 0], label: 'RESPONSE', detail: 'Instant reply', color: '#22c55e', type: 'end' },
+      
+      // SMART PATH (Self-Improvement)
+      { position: [1.5, 1.2, 0], label: 'CAPABILITY\nGAP', detail: 'Missing skill', color: '#f472b6', type: 'path' },
+      { position: [5.5, 1.2, 0], label: 'GATHER\nTOOLS', detail: 'Collect modules', color: '#f472b6', type: 'process' },
+      { position: [8.5, 1.2, 0], label: 'CREATE\nTASK', detail: 'Define work', color: '#fbbf24', type: 'process' },
+      { position: [11, 1.2, 0], label: 'HUMAN\nAPPROVAL', detail: 'Review & ok', color: '#60a5fa', type: 'process' },
+      { position: [13.5, 1.2, 0], label: 'DEVELOPMENT', detail: 'Build feature', color: '#c084fc', type: 'process' },
+      { position: [16, 1.2, 0], label: 'TESTING', detail: 'Verify & validate', color: '#c084fc', type: 'process' },
+      
+      // FINAL RESPONSE (after improvement)
+      { position: [18.5, 1.2, 0], label: 'ENHANCED\nRESPONSE', detail: 'Smart answer', color: '#22c55e', type: 'end' },
+    ],
+    
+    beams: [
+      // Fast path beams
+      { from: [-5.5, 2, 0], to: [-2, 2, 0], color: '#38bdf8', delay: 0, cycle: 8 },
+      { from: [-2, 2, 0], to: [1.5, 2.8, 0], color: '#22c55e', delay: 0.8, cycle: 8 },
+      { from: [1.5, 2.8, 0], to: [5.5, 2.8, 0], color: '#22c55e', delay: 1.6, cycle: 8 },
+      
+      // Smart path beams
+      { from: [-2, 2, 0], to: [1.5, 1.2, 0], color: '#f472b6', delay: 0.8, cycle: 8 },
+      { from: [1.5, 1.2, 0], to: [5.5, 1.2, 0], color: '#f472b6', delay: 2.4, cycle: 8 },
+      { from: [5.5, 1.2, 0], to: [8.5, 1.2, 0], color: '#fbbf24', delay: 3.2, cycle: 8 },
+      { from: [8.5, 1.2, 0], to: [11, 1.2, 0], color: '#60a5fa', delay: 4, cycle: 8 },
+      { from: [11, 1.2, 0], to: [13.5, 1.2, 0], color: '#c084fc', delay: 4.8, cycle: 8 },
+      { from: [13.5, 1.2, 0], to: [16, 1.2, 0], color: '#c084fc', delay: 5.6, cycle: 8 },
+      { from: [16, 1.2, 0], to: [18.5, 1.2, 0], color: '#22c55e', delay: 6.4, cycle: 8 },
+    ],
   };
 
-  const currentWorkflow = workflows[scenario];
-
   return (
-    <group ref={root} position={[0, 0, 0]}>
-      {currentWorkflow.nodes.map((node, idx) => (
-        <NodeSphere key={idx} position={new THREE.Vector3(...node.position)} label={node.label} detail={node.detail} color={node.color} />
+    <group ref={root} position={[0, -1, 0]}>
+      {/* Render all nodes */}
+      {workflowData.nodes.map((node, idx) => (
+        <NodeSphere 
+          key={idx} 
+          position={new THREE.Vector3(...node.position)} 
+          label={node.label} 
+          detail={node.detail} 
+          color={node.color}
+          type={node.type}
+        />
       ))}
-      {currentWorkflow.beams.map((beam, idx) => (
+      
+      {/* Render all beams */}
+      {workflowData.beams.map((beam, idx) => (
         <FlowBeam
           key={idx}
           from={new THREE.Vector3(...beam.from)}
           to={new THREE.Vector3(...beam.to)}
           color={beam.color}
           delay={beam.delay}
+          cycleDuration={beam.cycle}
         />
       ))}
     </group>
   );
 }
 
-function NodeSphere({ position, label, detail, color }) {
-  const pulse = useRef();
+function NodeSphere({ position, label, detail, color, type }) {
+  const mesh = useRef();
+  
   useFrame(({ clock }) => {
-    if (pulse.current) {
-      pulse.current.scale.setScalar(1 + Math.sin(clock.getElapsedTime() * 2.5) * 0.05);
+    if (mesh.current) {
+      mesh.current.scale.setScalar(1 + Math.sin(clock.getElapsedTime() * 2.5) * 0.04);
     }
   });
 
+  const size = type === 'decision' ? 0.5 : type === 'start' || type === 'end' ? 0.45 : 0.35;
+
   return (
     <group position={position}>
-      <mesh ref={pulse}>
-        <icosahedronGeometry args={[0.45, 2]} />
-        <meshStandardMaterial emissive={color} color="#0b1220" roughness={0.1} metalness={0.88} />
+      <mesh ref={mesh}>
+        {type === 'decision' ? (
+          <octahedronGeometry args={[size, 0]} />
+        ) : (
+          <icosahedronGeometry args={[size, 2]} />
+        )}
+        <meshStandardMaterial 
+          emissive={color} 
+          color="#0b1220" 
+          roughness={0.1} 
+          metalness={0.88}
+          wireframe={type === 'decision'}
+        />
       </mesh>
-      <Text position={[0, -0.75, 0]} fontSize={0.18} fontWeight="bold" color={color} anchorX="center" anchorY="middle" maxWidth={2}>
+      
+      <Text 
+        position={[0, -0.7, 0]} 
+        fontSize={0.14} 
+        fontWeight="bold" 
+        color={color} 
+        anchorX="center" 
+        anchorY="middle" 
+        maxWidth={2}
+      >
         {label}
       </Text>
-      <Text position={[0, -0.95, 0]} fontSize={0.11} color="#cbd5e1" anchorX="center" anchorY="middle" maxWidth={1.8}>
+      
+      <Text 
+        position={[0, -0.9, 0]} 
+        fontSize={0.09} 
+        color="#cbd5e1" 
+        anchorX="center" 
+        anchorY="middle" 
+        maxWidth={1.8}
+      >
         {detail}
       </Text>
     </group>
   );
 }
 
-function FlowBeam({ from, to, color, delay }) {
+function FlowBeam({ from, to, color, delay, cycleDuration }) {
   const pulse = useRef();
+  const line = useRef();
+  
   const dir = useMemo(() => {
     return new THREE.Vector3().subVectors(to, from).normalize();
   }, [from, to]);
+  
   const distance = from.distanceTo(to);
   const mid = new THREE.Vector3().addVectors(from, to).multiplyScalar(0.5);
   const quaternion = useMemo(() => new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir), [dir]);
 
   useFrame(({ clock }) => {
     if (pulse.current) {
-      const t = ((clock.getElapsedTime() + delay) * 0.4) % 1;
+      // Continuous flowing animation
+      const elapsed = clock.getElapsedTime() + delay;
+      const t = (elapsed / cycleDuration) % 1;
       pulse.current.position.copy(new THREE.Vector3().lerpVectors(from, to, t));
+      
+      // Pulsing opacity
+      pulse.current.material.opacity = 0.8 + Math.sin(elapsed * 4) * 0.3;
+    }
+    
+    if (line.current) {
+      // Animated line with traveling highlight
+      line.current.material.opacity = 0.2 + Math.sin((clock.getElapsedTime() + delay) * 3) * 0.15;
     }
   });
 
   return (
     <group>
-      <mesh position={mid} quaternion={quaternion}>
-        <cylinderGeometry args={[0.03, 0.03, distance, 10]} />
-        <meshStandardMaterial emissive={color} color={color} transparent opacity={0.32} />
+      {/* Static beam line */}
+      <mesh ref={line} position={mid} quaternion={quaternion}>
+        <cylinderGeometry args={[0.025, 0.025, distance, 8]} />
+        <meshStandardMaterial 
+          emissive={color} 
+          color={color} 
+          transparent 
+          opacity={0.25}
+        />
       </mesh>
+      
+      {/* Animated flowing particle */}
       <mesh ref={pulse}>
-        <sphereGeometry args={[0.1, 14, 14]} />
-        <meshStandardMaterial emissive={color} color={color} roughness={0.1} metalness={0.94} />
+        <sphereGeometry args={[0.12, 16, 16]} />
+        <meshStandardMaterial 
+          emissive={color} 
+          color={color} 
+          transparent
+          opacity={0.8}
+          roughness={0.1} 
+          metalness={0.9}
+        />
       </mesh>
     </group>
   );
