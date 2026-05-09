@@ -6,7 +6,7 @@ import * as THREE from 'three';
 function WorkflowScene() {
   return (
     <div className="relative h-[680px] w-full overflow-hidden rounded-[36px] border border-white/10 bg-[#07101f]/95 shadow-soft backdrop-blur-xl md:h-[750px]">
-      <Canvas camera={{ position: [0, 2.5, 14], fov: 45 }}>
+      <Canvas camera={{ position: [-1.8, 2.5, 18], fov: 45 }}>
         <color attach="background" args={['#02030a']} />
         <fog attach="fog" args={['#02030a', 6, 28]} />
         <directionalLight position={[3, 4, 3]} intensity={1.3} color="#84d5ff" />
@@ -46,46 +46,46 @@ function UnifiedWorkflowGraph() {
   const workflowData = {
     nodes: [
       // START
-      { position: [-5.5, 2, 0], label: 'USER QUERY', detail: 'Ask a question', color: '#38bdf8', type: 'start' },
+      { position: [-4.0, 2, 0], label: 'USER QUERY', detail: 'Ask a question', color: '#38bdf8', type: 'start' },
       
       // DECISION POINT
-      { position: [-2, 2, 0], label: 'AGENT\nANALYSIS', detail: 'Can answer?', color: '#a78bfa', type: 'decision' },
+      { position: [-1.6, 2, 0], label: 'AGENT\nANALYSIS', detail: 'Can answer?', color: '#a78bfa', type: 'decision' },
       
       // FAST PATH (Direct Answer)
-      { position: [1.5, 2.8, 0], label: 'HAS\nCAPABILITY', detail: 'Direct answer', color: '#22c55e', type: 'path' },
-      { position: [5.5, 2.8, 0], label: 'RESPONSE', detail: 'Instant reply', color: '#22c55e', type: 'end' },
+      { position: [1.1, 2.8, 0], label: 'HAS\nCAPABILITY', detail: 'Direct answer', color: '#22c55e', type: 'path' },
+      { position: [3.2, 2.8, 0], label: 'RESPONSE', detail: 'Instant reply', color: '#22c55e', type: 'end' },
       
       // SMART PATH (Self-Improvement)
-      { position: [1.5, 1.2, 0], label: 'CAPABILITY\nGAP', detail: 'Missing skill', color: '#f472b6', type: 'path' },
-      { position: [5.5, 1.2, 0], label: 'GATHER\nTOOLS', detail: 'Collect modules', color: '#f472b6', type: 'process' },
-      { position: [8.5, 1.2, 0], label: 'CREATE\nTASK', detail: 'Define work', color: '#fbbf24', type: 'process' },
-      { position: [11, 1.2, 0], label: 'HUMAN\nAPPROVAL', detail: 'Review & ok', color: '#60a5fa', type: 'process' },
-      { position: [13.5, 1.2, 0], label: 'DEVELOPMENT', detail: 'Build feature', color: '#c084fc', type: 'process' },
-      { position: [16, 1.2, 0], label: 'TESTING', detail: 'Verify & validate', color: '#c084fc', type: 'process' },
+      { position: [1.1, 1.2, 0], label: 'CAPABILITY\nGAP', detail: 'Missing skill', color: '#f472b6', type: 'path' },
+      { position: [3.2, 1.2, 0], label: 'GATHER\nTOOLS', detail: 'Collect modules', color: '#f472b6', type: 'process' },
+      { position: [5.1, 1.2, 0], label: 'CREATE\nTASK', detail: 'Define work', color: '#fbbf24', type: 'process' },
+      { position: [6.9, 1.2, 0], label: 'HUMAN\nAPPROVAL', detail: 'Review & ok', color: '#60a5fa', type: 'process' },
+      { position: [8.7, 1.2, 0], label: 'DEVELOPMENT', detail: 'Build feature', color: '#c084fc', type: 'process' },
+      { position: [10.5, 1.2, 0], label: 'TESTING', detail: 'Verify & validate', color: '#c084fc', type: 'process' },
       
       // FINAL RESPONSE (after improvement)
-      { position: [18.5, 1.2, 0], label: 'ENHANCED\nRESPONSE', detail: 'Smart answer', color: '#22c55e', type: 'end' },
+      { position: [12.3, 1.2, 0], label: 'ENHANCED\nRESPONSE', detail: 'Smart answer', color: '#22c55e', type: 'end' },
     ],
     
     beams: [
       // Fast path beams
-      { from: [-5.5, 2, 0], to: [-2, 2, 0], color: '#38bdf8', delay: 0, cycle: 8 },
-      { from: [-2, 2, 0], to: [1.5, 2.8, 0], color: '#22c55e', delay: 0.8, cycle: 8 },
-      { from: [1.5, 2.8, 0], to: [5.5, 2.8, 0], color: '#22c55e', delay: 1.6, cycle: 8 },
+      { from: [-4.0, 2, 0], to: [-1.6, 2, 0], color: '#38bdf8', delay: 0, cycle: 8 },
+      { from: [-1.6, 2, 0], to: [1.1, 2.8, 0], color: '#22c55e', delay: 0.8, cycle: 8 },
+      { from: [1.1, 2.8, 0], to: [3.2, 2.8, 0], color: '#22c55e', delay: 1.6, cycle: 8 },
       
       // Smart path beams
-      { from: [-2, 2, 0], to: [1.5, 1.2, 0], color: '#f472b6', delay: 0.8, cycle: 8 },
-      { from: [1.5, 1.2, 0], to: [5.5, 1.2, 0], color: '#f472b6', delay: 2.4, cycle: 8 },
-      { from: [5.5, 1.2, 0], to: [8.5, 1.2, 0], color: '#fbbf24', delay: 3.2, cycle: 8 },
-      { from: [8.5, 1.2, 0], to: [11, 1.2, 0], color: '#60a5fa', delay: 4, cycle: 8 },
-      { from: [11, 1.2, 0], to: [13.5, 1.2, 0], color: '#c084fc', delay: 4.8, cycle: 8 },
-      { from: [13.5, 1.2, 0], to: [16, 1.2, 0], color: '#c084fc', delay: 5.6, cycle: 8 },
-      { from: [16, 1.2, 0], to: [18.5, 1.2, 0], color: '#22c55e', delay: 6.4, cycle: 8 },
+      { from: [-1.6, 2, 0], to: [1.1, 1.2, 0], color: '#f472b6', delay: 0.8, cycle: 8 },
+      { from: [1.1, 1.2, 0], to: [3.2, 1.2, 0], color: '#f472b6', delay: 2.4, cycle: 8 },
+      { from: [3.2, 1.2, 0], to: [5.1, 1.2, 0], color: '#fbbf24', delay: 3.2, cycle: 8 },
+      { from: [5.1, 1.2, 0], to: [6.9, 1.2, 0], color: '#60a5fa', delay: 4, cycle: 8 },
+      { from: [6.9, 1.2, 0], to: [8.7, 1.2, 0], color: '#c084fc', delay: 4.8, cycle: 8 },
+      { from: [8.7, 1.2, 0], to: [10.5, 1.2, 0], color: '#c084fc', delay: 5.6, cycle: 8 },
+      { from: [10.5, 1.2, 0], to: [12.3, 1.2, 0], color: '#22c55e', delay: 6.4, cycle: 8 },
     ],
   };
 
   return (
-    <group ref={root} position={[0, -1, 0]}>
+    <group ref={root} position={[-4.2, -0.6, 0]} scale={[1.2, 1.2, 1.2]}>
       {/* Render all nodes */}
       {workflowData.nodes.map((node, idx) => (
         <NodeSphere 
@@ -122,7 +122,7 @@ function NodeSphere({ position, label, detail, color, type }) {
     }
   });
 
-  const size = type === 'decision' ? 0.5 : type === 'start' || type === 'end' ? 0.45 : 0.35;
+  const size = type === 'decision' ? 0.6 : type === 'start' || type === 'end' ? 0.55 : 0.42;
 
   return (
     <group position={position}>
@@ -142,24 +142,24 @@ function NodeSphere({ position, label, detail, color, type }) {
       </mesh>
       
       <Text 
-        position={[0, -0.7, 0]} 
-        fontSize={0.14} 
+        position={[0, -0.75, 0]} 
+        fontSize={0.19} 
         fontWeight="bold" 
         color={color} 
         anchorX="center" 
         anchorY="middle" 
-        maxWidth={2}
+        maxWidth={2.2}
       >
         {label}
       </Text>
       
       <Text 
-        position={[0, -0.9, 0]} 
-        fontSize={0.09} 
+        position={[0, -1.05, 0]} 
+        fontSize={0.13} 
         color="#cbd5e1" 
         anchorX="center" 
         anchorY="middle" 
-        maxWidth={1.8}
+        maxWidth={2.2}
       >
         {detail}
       </Text>
