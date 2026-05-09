@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import { useLocation } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import AnimatedBackground from '../components/AnimatedBackground';
-import useCustomCursor from '../hooks/useCustomCursor';
 
 function RootLayout({ children }) {
   const location = useLocation();
@@ -14,8 +13,6 @@ function RootLayout({ children }) {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useCustomCursor();
 
   return (
     <div className="min-h-screen overflow-x-hidden text-white">
