@@ -1,9 +1,10 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle2, Code2, Layers, ShieldCheck, Zap } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Code2, Database, Layers, ShieldCheck, Server, Zap, Briefcase, Cloud } from 'lucide-react';
 import SectionHeading from '../components/SectionHeading';
 import FeatureCard from '../components/FeatureCard';
 import DeveloperCard from '../components/DeveloperCard';
 import WorkflowScene from '../components/WorkflowScene';
+import EnterpriseDiagram from '../components/EnterpriseDiagram';
 import { features } from '../data/features';
 import { problems, solutions } from '../data/problems';
 import { stats } from '../data/stats';
@@ -14,6 +15,7 @@ function Home() {
     <div className="relative overflow-hidden px-6 pb-24 pt-[120px] sm:px-8">
       <div className="mx-auto flex max-w-7xl flex-col gap-16">
         <HeroSection />
+        <EnterpriseSection />
         <WorkflowSection />
         <SectionHeading
           eyebrow="Why NovaMind"
@@ -81,6 +83,143 @@ function HeroSection() {
           </div>
         </div>
       </motion.div>
+    </section>
+  );
+}
+
+function EnterpriseSection() {
+  return (
+    <section className="rounded-[36px] border border-white/10 bg-[#07101b]/90 p-8 shadow-soft backdrop-blur-xl">
+      <div className="grid gap-8 lg:grid-cols-[1fr_1.05fr]">
+        <div className="space-y-8">
+          <div className="space-y-4">
+            <p className="text-sm uppercase tracking-[0.35em] text-cyan-300/80">ENTERPRISE AI THAT STAYS YOURS.</p>
+            <h2 className="text-4xl font-semibold tracking-[-0.04em] text-white sm:text-5xl">
+              Every company says they want AI.
+            </h2>
+            <p className="text-lg leading-8 text-slate-300">
+              Until they realize it means sending sensitive company data to someone else&apos;s servers. That&apos;s where most enterprise AI conversations quietly die.
+            </p>
+          </div>
+
+          <div className="space-y-5 rounded-[32px] border border-white/10 bg-[#0b1220]/90 p-6">
+            <p className="text-sm uppercase tracking-[0.28em] text-cyan-300/80">What enterprises really want</p>
+            <p className="text-lg leading-8 text-slate-300">
+              Companies don&apos;t just want “smart AI.” They want control. We built an AI agent that runs entirely inside your infrastructure, works with your systems, and improves itself over time—without exposing your data outside your firewall.
+            </p>
+          </div>
+
+          <div className="rounded-[32px] border border-white/10 bg-[#0b1220]/90 p-6">
+            <p className="text-lg font-semibold text-white">Built to evolve. Not just respond.</p>
+            <p className="mt-3 text-slate-300">
+              When the system hits a capability gap, it doesn&apos;t say “I don&apos;t know.” It enters a self-improvement workflow.
+            </p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[
+              'REQUIREMENT GATHERING',
+              'HUMAN APPROVAL',
+              'AUTOMATED DEVELOPMENT & TESTING',
+              'DEPLOYMENT',
+            ].map((step) => (
+              <div key={step} className="rounded-3xl border border-white/10 bg-white/5 p-5 text-sm text-slate-200">
+                <p className="font-semibold uppercase tracking-[0.24em] text-cyan-300/90">{step}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-sm uppercase tracking-[0.28em] text-cyan-300/80">Your AI evolves based on real operational problems inside your business.</p>
+        </div>
+
+        <div className="relative rounded-[36px] border border-cyan-300/10 bg-[#06111e]/95 p-8 shadow-soft">
+          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-cyan-400/10 to-transparent" />
+          <div className="relative rounded-[32px] border border-white/10 bg-[#081523]/95 p-8">
+            <div className="mb-8 rounded-[28px] border border-white/10 bg-[#091727]/95 p-6 text-center">
+              <p className="text-sm uppercase tracking-[0.35em] text-cyan-300/80">AI AGENT</p>
+              <h3 className="mt-4 text-2xl font-semibold text-white">Runs Inside Your Firewall</h3>
+              <p className="mt-3 text-sm leading-6 text-slate-300">On-premise, private cloud, your infrastructure, your data stays yours.</p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {[
+                { icon: Server, label: 'On-Premise' },
+                { icon: Cloud, label: 'Private Cloud' },
+                { icon: Briefcase, label: 'Your Infrastructure' },
+                { icon: ShieldCheck, label: 'Your Data Stays Yours' },
+              ].map(({ icon: Icon, label }) => (
+                <div key={label} className="flex items-center gap-3 rounded-3xl border border-white/10 bg-[#0c1725]/95 p-4 text-slate-300">
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-cyan-400/10 text-cyan-300">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <span className="font-medium">{label}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 rounded-[28px] border border-white/10 bg-[#04101b]/95 p-5">
+              <EnterpriseDiagram />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-10 grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+        <div className="rounded-[32px] border border-white/10 bg-[#0b1220]/95 p-6">
+          <p className="text-sm uppercase tracking-[0.28em] text-rose-300/90">MOST ENTERPRISE AI TODAY IS A COST CENTER.</p>
+          <ul className="mt-6 space-y-3 text-slate-300">
+            <li className="flex items-start gap-3">
+              <span className="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-rose-400" />
+              Expensive integrations
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-rose-400" />
+              Endless customization
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-rose-400" />
+              High cloud inference costs
+            </li>
+            <li className="flex items-start gap-3">
+              <span className="mt-1 inline-flex h-2.5 w-2.5 rounded-full bg-rose-400" />
+              Poor scalability
+            </li>
+          </ul>
+        </div>
+        <div className="rounded-[32px] border border-white/10 bg-[#0b1220]/95 p-6">
+          <p className="text-sm uppercase tracking-[0.28em] text-cyan-300/80">OUR APPROACH IS DIFFERENT.</p>
+          <p className="mt-4 text-slate-300">
+            A pluggable architecture with specialized tools and smaller local models to handle specific workflows efficiently.
+          </p>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            {[
+              { icon: Layers, label: 'HR WORKFLOWS' },
+              { icon: Database, label: 'FINANCE DATA' },
+              { icon: Zap, label: 'LOGISTICS OPERATIONS' },
+              { icon: Code2, label: 'IT SYSTEMS' },
+              { icon: ShieldCheck, label: 'CUSTOM TOOLS' },
+            ].map(({ icon: Icon, label }) => (
+              <div key={label} className="flex items-center gap-3 rounded-3xl border border-white/10 bg-white/5 p-4 text-slate-300">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-cyan-400/10 text-cyan-300">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <span className="font-medium uppercase tracking-[0.18em] text-xs">{label}</span>
+              </div>
+            ))}
+          </div>
+          <p className="mt-6 text-sm uppercase tracking-[0.28em] text-cyan-300/80">Right tool. Right model. Right place.</p>
+        </div>
+      </div>
+
+      <div className="mt-10 rounded-[32px] border border-cyan-300/10 bg-white/5 p-6 text-center">
+        <p className="text-lg font-semibold text-white">WE&apos;RE NOT BUILDING AN AI THAT KNOWS EVERYTHING TODAY.</p>
+        <p className="mt-3 text-lg font-semibold text-cyan-300">WE&apos;RE BUILDING AN ARCHITECTURE THAT CAN LEARN ANYTHING TOMORROW.</p>
+      </div>
+
+      <div className="mt-6 rounded-[32px] border border-white/10 bg-[#02050c]/95 p-6 text-center">
+        <p className="text-sm uppercase tracking-[0.28em] text-cyan-300/80">CURIOUS TO HEAR:</p>
+        <p className="mt-3 text-lg font-semibold text-white">What&apos;s the biggest thing stopping enterprises from fully trusting AI today?</p>
+      </div>
     </section>
   );
 }
