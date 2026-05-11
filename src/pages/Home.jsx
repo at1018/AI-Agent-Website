@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { ArrowRight, CheckCircle2, Code2, Database, Layers, ShieldCheck, Server, Zap, Briefcase, Cloud } from 'lucide-react';
 import SectionHeading from '../components/SectionHeading';
 import FeatureCard from '../components/FeatureCard';
@@ -36,6 +37,35 @@ function Home() {
 }
 
 function HeroSection() {
+  const [hoveredStep, setHoveredStep] = useState(null);
+
+  const workflowSteps = [
+    {
+      name: 'Private Query Analysis',
+      description: 'Processes data locally on your infrastructure. Zero data leakage to public clouds, ensuring 100% compliance with HIPAA/GDPR.'
+    },
+    {
+      name: 'Dynamic Tool Selection',
+      description: 'Intelligently chooses from your custom Tool Registry to solve the query with the highest precision and lowest token cost.'
+    },
+    {
+      name: 'Capability Gap Detection',
+      description: "Instantly identifies if the current task exceeds the agent's skills, preventing hallucinations and 'I don't know' dead ends."
+    },
+    {
+      name: 'Self-Requirement Spec',
+      description: 'The agent generates a technical PRD (Product Requirement Document) for the missing tool, saving your team weeks of research.'
+    },
+    {
+      name: 'Human Gatekeeping',
+      description: 'Complete administrative oversight. No new code or external connection is deployed without explicit human verification.'
+    },
+    {
+      name: 'Automated Evolution',
+      description: 'Automatically builds and pushes the approved tool to your registry. Your system is now permanently upgraded for future tasks.'
+    }
+  ];
+
   return (
     <section className="relative overflow-hidden rounded-[40px] border border-white/10 bg-[#08101f]/90 p-8 shadow-soft backdrop-blur-xl sm:p-12">
       <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-cyan-400/10 to-transparent" />
@@ -69,11 +99,32 @@ function HeroSection() {
               <div className="space-y-5">
                 <p className="text-sm uppercase tracking-[0.3em] text-cyan-300/80">Live workflow preview</p>
                 <div className="rounded-3xl border border-white/10 bg-[#08101f]/95 p-5">
-                  <div className="space-y-4">
-                    {['Analyze latest AI startup trends', 'Agent receives query', 'Selects tools dynamically', 'Detects capability gap'].map((step, idx) => (
-                      <div key={step} className="flex items-center gap-3 text-slate-200">
-                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-cyan-400/10 text-cyan-300">{idx + 1}</span>
-                        <span className="text-sm">{step}</span>
+                  <div className="space-y-3">
+                    {workflowSteps.map((step, idx) => (
+                      <div
+                        key={idx}
+                        className="group relative"
+                        onMouseEnter={() => setHoveredStep(idx)}
+                        onMouseLeave={() => setHoveredStep(null)}
+                      >
+                        <div className="flex items-center gap-3 text-slate-200 cursor-pointer p-2 rounded-lg transition hover:bg-white/5">
+                          <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-cyan-400/10 text-cyan-300 flex-shrink-0">{idx + 1}</span>
+                          <span className="text-sm font-medium">{step.name}</span>
+                        </div>
+                        
+                        {/* Tooltip */}
+                        {hoveredStep === idx && (
+                          <motion.div
+                            initial={{ opacity: 0, y: -8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -8 }}
+                            transition={{ duration: 0.2 }}
+                            className="absolute bottom-full left-0 right-0 mb-2 p-3 bg-slate-950 border border-cyan-400/30 rounded-lg shadow-lg z-50 w-56"
+                          >
+                            <p className="text-xs text-slate-300 leading-relaxed">{step.description}</p>
+                            <div className="absolute bottom-0 left-4 w-2 h-2 bg-slate-950 border-r border-b border-cyan-400/30 transform rotate-45 translate-y-1" />
+                          </motion.div>
+                        )}
                       </div>
                     ))}
                   </div>
