@@ -38,31 +38,32 @@ function Home() {
 
 function HeroSection() {
   const [hoveredStep, setHoveredStep] = useState(null);
+  const [showModal, setShowModal] = useState(false);
 
   const workflowSteps = [
     {
       name: 'Private Query Analysis',
-      description: 'Processes data locally on your infrastructure. Zero data leakage to public clouds, ensuring 100% compliance with HIPAA/GDPR.'
+      description: 'Secure, local processing within your firewall.'
     },
     {
       name: 'Dynamic Tool Selection',
-      description: 'Intelligently chooses from your custom Tool Registry to solve the query with the highest precision and lowest token cost.'
+      description: 'Orchestrates the best tools from your registry.'
     },
     {
       name: 'Capability Gap Detection',
-      description: "Instantly identifies if the current task exceeds the agent's skills, preventing hallucinations and 'I don't know' dead ends."
+      description: 'Identifies missing skills before failure occurs.'
     },
     {
       name: 'Self-Requirement Spec',
-      description: 'The agent generates a technical PRD (Product Requirement Document) for the missing tool, saving your team weeks of research.'
+      description: 'Generates technical blueprints for new tools.'
     },
     {
       name: 'Human Gatekeeping',
-      description: 'Complete administrative oversight. No new code or external connection is deployed without explicit human verification.'
+      description: '100% oversight with one-click tool approval.'
     },
     {
       name: 'Automated Evolution',
-      description: 'Automatically builds and pushes the approved tool to your registry. Your system is now permanently upgraded for future tasks.'
+      description: 'Builds, tests, and deploys upgrades autonomously.'
     }
   ];
 
@@ -74,21 +75,21 @@ function HeroSection() {
           <div className="w-full lg:max-w-2xl space-y-4 sm:space-y-6">
             <span className="inline-flex items-center gap-3 rounded-full border border-cyan-300/20 bg-white/5 px-3 py-2 sm:px-4 sm:py-2 text-xs sm:text-sm text-cyan-300">
               <CheckCircle2 className="h-4 w-4 text-cyan-300 flex-shrink-0" />
-              AI infrastructure, not a chatbot.
+              Self-Evolving AI Infrastructure
             </span>
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.03em] sm:tracking-[-0.05em] text-white">
-              Adaptive AI Infrastructure That Evolves Beyond Traditional Agents
+              NovaMind: The World's First Self-Evolving AI Infrastructure.
             </h1>
             <p className="max-w-2xl text-base sm:text-lg md:text-lg leading-7 sm:leading-8 text-slate-300">
-              Modular intelligence, dynamic orchestration, and autonomous improvement workflows for enterprise-grade automation.
+              Stop building fragile AI bots. Deploy a private, modular agent that lives on your system, identifies its own capability gaps, and autonomously builds the tools it needs to scale.
             </p>
             <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center">
-              <a href="#workflow" className="hover-target inline-flex items-center justify-center rounded-2xl sm:rounded-3xl bg-gradient-to-r from-cyan-400 to-violet-500 px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-slate-950 transition hover:brightness-110">
-                Explore the network
+              <button onClick={() => setShowModal(true)} className="hover-target inline-flex items-center justify-center rounded-2xl sm:rounded-3xl bg-gradient-to-r from-cyan-400 to-violet-500 px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-slate-950 transition hover:brightness-110">
+                View Investor Deck
                 <ArrowRight className="ml-2 h-3.5 w-3.5 sm:h-4 sm:w-4" />
-              </a>
-              <a href="/contact" className="hover-target inline-flex items-center justify-center rounded-2xl sm:rounded-3xl border border-white/10 bg-white/5 px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
-                Talk to our team
+              </button>
+              <a href="#workflow" className="hover-target inline-flex items-center justify-center rounded-2xl sm:rounded-3xl border border-white/10 bg-white/5 px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+                See Self-Evolution in Action
               </a>
             </div>
           </div>
@@ -121,10 +122,10 @@ function HeroSection() {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -8 }}
                             transition={{ duration: 0.2 }}
-                            className="hidden sm:block absolute bottom-full left-0 right-0 mb-2 p-3 bg-slate-950 border border-cyan-400/30 rounded-lg shadow-lg z-50 w-56"
+                            className="hidden sm:block absolute top-full left-0 mt-2 p-3 bg-slate-950 border border-cyan-400/30 rounded-lg shadow-lg z-50 w-56"
                           >
                             <p className="text-xs text-slate-300 leading-relaxed">{step.description}</p>
-                            <div className="absolute bottom-0 left-4 w-2 h-2 bg-slate-950 border-r border-b border-cyan-400/30 transform rotate-45 translate-y-1" />
+                            <div className="absolute top-0 left-4 w-2 h-2 bg-slate-950 border-r border-b border-cyan-400/30 transform -translate-y-1 rotate-45" />
                           </motion.div>
                         )}
                       </div>
@@ -136,6 +137,26 @@ function HeroSection() {
           </div>
         </div>
       </motion.div>
+
+      {/* Investor Deck Modal */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="relative max-w-md mx-4 rounded-[24px] border border-white/10 bg-[#08101f]/95 p-6 shadow-soft backdrop-blur-xl">
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 text-slate-400 hover:text-white"
+            >
+              ✕
+            </button>
+            <h3 className="text-lg font-semibold text-white mb-4">Investor Deck</h3>
+            <ul className="space-y-3 text-sm text-slate-300">
+              <li>• Market Opportunity: Disrupting the $250B AI Services industry with modular tech.</li>
+              <li>• Efficiency: 90% reduction in R&D costs via autonomous tool forging.</li>
+              <li>• Business Model: High-margin SaaS licensing + Tool Marketplace royalties.</li>
+            </ul>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
@@ -352,13 +373,27 @@ function InvestorSection() {
         title="The future of AI is infrastructure that learns and grows automatically."
         description="Position your investment around scalable orchestration, enterprise automation, and continuously improving capabilities."
       />
-      <div className="mt-6 sm:mt-10 grid gap-3 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((item) => (
-          <div key={item.label} className="rounded-2xl sm:rounded-3xl border border-white/10 bg-white/5 p-4 sm:p-6 text-center">
-            <p className="text-2xl sm:text-4xl font-semibold text-cyan-300">{item.value}</p>
-            <p className="mt-2 sm:mt-3 text-xs sm:text-sm leading-5 sm:leading-6 text-slate-300">{item.label}</p>
-          </div>
-        ))}
+      <div className="mt-6 sm:mt-10">
+        <h3 className="text-lg font-semibold text-white mb-4">Cost Comparison</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse border border-white/10 bg-white/5 rounded-lg">
+            <thead>
+              <tr>
+                <th className="border border-white/10 p-3 text-left text-sm font-semibold text-cyan-300">Metric</th>
+                <th className="border border-white/10 p-3 text-left text-sm font-semibold text-cyan-300">Traditional AI</th>
+                <th className="border border-white/10 p-3 text-left text-sm font-semibold text-cyan-300">NovaMind</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td className="border border-white/10 p-3 text-sm text-slate-300">ROI Payback Period</td>
+                <td className="border border-white/10 p-3 text-sm text-slate-300">18 - 24 Months</td>
+                <td className="border border-white/10 p-3 text-sm text-slate-300">3 - 5 Months (10x Faster ROI)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-4 text-xs text-slate-400">Profitability is driven by 78% Gross Margins through On-System execution.</p>
       </div>
       <div className="mt-6 sm:mt-10 grid gap-4 sm:gap-6 lg:grid-cols-3">
         <div className="rounded-2xl sm:rounded-3xl border border-white/10 bg-[#091122]/90 p-4 sm:p-6">
@@ -395,6 +430,34 @@ function TeamSection() {
         ))}
       </div>
     </section>
+  );
+
+  return (
+    <div className="relative overflow-hidden px-3 sm:px-6 pb-16 sm:pb-24 pt-[100px] sm:pt-[120px] lg:pt-[140px]">
+      <div className="mx-auto flex max-w-7xl flex-col gap-10 sm:gap-14 md:gap-16">
+        <HeroSection />
+        <EnterpriseSection />
+        <WorkflowSection />
+        <SectionHeading
+          eyebrow="Why NovaMind"
+          title="Infrastructure intelligence built for enterprise evolution."
+          description="We transform brittle AI pipelines into a modular, self-healing platform that scales with business complexity."
+        />
+        <div className="grid gap-4 sm:gap-6 lg:grid-cols-2 xl:grid-cols-3">
+          {features.slice(0, 6).map((feature, index) => (
+            <FeatureCard key={feature.title} {...feature} index={index + 1} />
+          ))}
+        </div>
+        <ProblemSolutionSection />
+        <InvestorSection />
+        <TeamSection />
+
+        {/* Security & Trust Badge */}
+        <div className="mt-8 rounded-[20px] sm:rounded-[32px] border border-cyan-300/10 bg-white/5 p-4 sm:p-6 text-center">
+          <p className="text-sm sm:text-base font-semibold text-cyan-300">Enterprise Ready: NovaMind runs on your system. Your proprietary data never leaves your firewall.</p>
+        </div>
+      </div>
+    </div>
   );
 }
 

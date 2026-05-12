@@ -1,22 +1,22 @@
 export const features = [
   {
-    title: 'Modular Tool Ecosystem',
-    description: 'Connect dynamic tools to index, analyze, and orchestrate data with intelligent runtime selection.',
+    title: 'Pluggable Registry',
+    description: 'LEGO-style modular architecture for instant scaling.',
     icon: 'Layers',
   },
   {
-    title: 'Capability Gap Detection',
-    description: 'Automatically surface missing skills and initiate improvement workflows for evolving intelligence.',
+    title: 'Gap Detection',
+    description: 'Proprietary engine that specs out its own technical solutions.',
     icon: 'AlertTriangle',
   },
   {
-    title: 'Multi-Agent Architecture',
-    description: 'Coordinate specialized agents across workflows to solve complex enterprise problems in parallel.',
+    title: 'Sovereignty',
+    description: 'On-System execution ensuring 100% data privacy and compliance.',
     icon: 'Cpu',
   },
   {
-    title: 'Enterprise Automation',
-    description: 'Deploy governance-ready orchestration with self-improving pipelines for large-scale operations.',
+    title: 'Governance',
+    description: 'Human-in-the-loop system for secure enterprise-grade evolution.',
     icon: 'ShieldCheck',
   },
   {
