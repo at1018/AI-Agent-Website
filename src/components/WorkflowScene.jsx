@@ -1,20 +1,32 @@
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sparkles, Text } from '@react-three/drei';
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 
 function WorkflowScene() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const cameraConfig = isMobile
+    ? { position: [-0.2, 1.8, 14], fov: 75 }
+    : { position: [-1.8, 2.5, 18], fov: 45 };
+
   return (
-    <div className="relative h-[680px] w-full overflow-hidden rounded-[36px] border border-white/10 bg-[#07101f]/95 shadow-soft backdrop-blur-xl md:h-[750px]">
-      <Canvas camera={{ position: [-1.8, 2.5, 18], fov: 45 }}>
+    <div className="relative h-[400px] w-full overflow-hidden rounded-[24px] sm:rounded-[36px] border border-white/10 bg-[#07101f]/95 shadow-soft backdrop-blur-xl sm:h-[550px] md:h-[680px] lg:h-[750px]">
+      <Canvas camera={cameraConfig}>
         <color attach="background" args={['#02030a']} />
         <fog attach="fog" args={['#02030a', 6, 28]} />
         <directionalLight position={[3, 4, 3]} intensity={1.3} color="#84d5ff" />
         <ambientLight intensity={0.2} />
         <pointLight position={[-3, 1.5, 2]} intensity={0.75} color="#38bdf8" />
         <pointLight position={[3, -1, 2]} intensity={0.7} color="#c084fc" />
-        <Sparkles count={80} scale={8} size={1.2} speed={0.3} color="#7dd3fc" />
-        <UnifiedWorkflowGraph />
+        <Sparkles count={isMobile ? 40 : 80} scale={isMobile ? 4 : 8} size={1.2} speed={0.3} color="#7dd3fc" />
+        <UnifiedWorkflowGraph isMobile={isMobile} />
       </Canvas>
       <WorkflowLegend />
     </div>
@@ -23,23 +35,23 @@ function WorkflowScene() {
 
 function WorkflowLegend() {
   return (
-    <div className="absolute top-6 left-6 space-y-3 z-10">
-      <div className="text-xs uppercase tracking-[0.3em] text-cyan-300/80 font-semibold">Adaptive AI Workflow</div>
-      <div className="space-y-2 text-xs text-slate-300">
+    <div className="absolute top-3 left-3 sm:top-6 sm:left-6 space-y-2 sm:space-y-3 z-10">
+      <div className="text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.3em] text-cyan-300/80 font-semibold">Adaptive AI Workflow</div>
+      <div className="space-y-1 sm:space-y-2 text-[10px] sm:text-xs text-slate-300">
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-cyan-400" />
-          <span>Fast Path: Direct Answer</span>
+          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-cyan-400 flex-shrink-0" />
+          <span className="line-clamp-1">Fast Path: Direct Answer</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-pink-400" />
-          <span>Smart Path: Self-Improvement</span>
+          <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-pink-400 flex-shrink-0" />
+          <span className="line-clamp-1">Smart Path: Self-Improvement</span>
         </div>
       </div>
     </div>
   );
 }
 
-function UnifiedWorkflowGraph() {
+function UnifiedWorkflowGraph({ isMobile }) {
   const root = useRef();
 
   // Complete workflow with both paths visible simultaneously
@@ -84,8 +96,11 @@ function UnifiedWorkflowGraph() {
     ],
   };
 
+  const scale = isMobile ? [0.58, 0.58, 0.58] : [1.2, 1.2, 1.2];
+  const position = isMobile ? [-0.8, -0.2, 0] : [-4.2, -0.6, 0];
+
   return (
-    <group ref={root} position={[-4.2, -0.6, 0]} scale={[1.2, 1.2, 1.2]}>
+    <group ref={root} position={position} scale={scale}>
       {/* Render all nodes */}
       {workflowData.nodes.map((node, idx) => (
         <NodeSphere 
@@ -95,6 +110,7 @@ function UnifiedWorkflowGraph() {
           detail={node.detail} 
           color={node.color}
           type={node.type}
+          isMobile={isMobile}
         />
       ))}
       
@@ -113,7 +129,7 @@ function UnifiedWorkflowGraph() {
   );
 }
 
-function NodeSphere({ position, label, detail, color, type }) {
+function NodeSphere({ position, label, detail, color, type, isMobile }) {
   const mesh = useRef();
   
   useFrame(({ clock }) => {
@@ -123,6 +139,11 @@ function NodeSphere({ position, label, detail, color, type }) {
   });
 
   const size = type === 'decision' ? 0.6 : type === 'start' || type === 'end' ? 0.55 : 0.42;
+  const titleSize = isMobile ? 0.14 : 0.19;
+  const detailSize = isMobile ? 0.1 : 0.13;
+  const textWidth = isMobile ? 1.4 : 2.2;
+  const titleOffset = isMobile ? -0.65 : -0.75;
+  const detailOffset = isMobile ? -0.9 : -1.05;
 
   return (
     <group position={position}>
@@ -142,24 +163,24 @@ function NodeSphere({ position, label, detail, color, type }) {
       </mesh>
       
       <Text 
-        position={[0, -0.75, 0]} 
-        fontSize={0.19} 
+        position={[0, titleOffset, 0]} 
+        fontSize={titleSize} 
         fontWeight="bold" 
         color={color} 
         anchorX="center" 
         anchorY="middle" 
-        maxWidth={2.2}
+        maxWidth={textWidth}
       >
         {label}
       </Text>
       
       <Text 
-        position={[0, -1.05, 0]} 
-        fontSize={0.13} 
+        position={[0, detailOffset, 0]} 
+        fontSize={detailSize} 
         color="#cbd5e1" 
         anchorX="center" 
         anchorY="middle" 
-        maxWidth={2.2}
+        maxWidth={textWidth}
       >
         {detail}
       </Text>

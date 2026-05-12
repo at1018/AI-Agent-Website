@@ -1,23 +1,37 @@
 import { Canvas } from '@react-three/fiber';
 import { Text } from '@react-three/drei';
-import { useMemo, useRef } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 
 function EnterpriseDiagram() {
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const cameraConfig = isMobile
+    ? { position: [0, 0, 6.5], fov: 60 }
+    : { position: [0, 0, 8], fov: 50 };
+
   return (
-    <div className="relative h-[400px] w-full overflow-hidden rounded-[36px] border border-white/10 bg-[#07101f]/95 shadow-soft backdrop-blur-xl">
-      <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>
+    <div className="relative h-[240px] sm:h-[280px] md:h-[320px] lg:h-[380px] w-full max-w-full overflow-hidden rounded-[16px] sm:rounded-[24px] md:rounded-[32px] border border-white/10 bg-[#07101f]/95 shadow-soft backdrop-blur-xl">
+      <Canvas camera={cameraConfig}>
         <color attach="background" args={['#02030a']} />
         <fog attach="fog" args={['#02030a', 4, 12]} />
         <directionalLight position={[2, 3, 2]} intensity={1} color="#84d5ff" />
         <ambientLight intensity={0.3} />
-        <EnterpriseNetwork />
+        <EnterpriseNetwork isMobile={isMobile} />
       </Canvas>
     </div>
   );
 }
 
-function EnterpriseNetwork() {
+function EnterpriseNetwork({ isMobile }) {
+  const scale = isMobile ? 0.7 : 1;
+  
   const nodes = [
     { position: [0, 1.5, 0], label: 'AI AGENT', color: '#22c55e', size: 0.8 },
     { position: [-1.7, -0.4, 0], label: 'ERP', color: '#60a5fa', size: 0.5 },
@@ -38,9 +52,9 @@ function EnterpriseNetwork() {
   ];
 
   return (
-    <group>
+    <group scale={[scale, scale, scale]}>
       {nodes.map((node, idx) => (
-        <Node key={idx} position={node.position} label={node.label} color={node.color} size={node.size} />
+        <Node key={idx} position={node.position} label={node.label} color={node.color} size={node.size} isMobile={isMobile} />
       ))}
       {connections.map((conn, idx) => (
         <Connection key={idx} from={conn[0]} to={conn[1]} />
@@ -49,8 +63,9 @@ function EnterpriseNetwork() {
   );
 }
 
-function Node({ position, label, color, size }) {
+function Node({ position, label, color, size, isMobile }) {
   const mesh = useRef();
+  const fontSize = isMobile ? 0.12 : 0.15;
 
   return (
     <group position={position}>
@@ -60,7 +75,7 @@ function Node({ position, label, color, size }) {
       </mesh>
       <Text
         position={[0, -size - 0.3, 0]}
-        fontSize={0.15}
+        fontSize={fontSize}
         fontWeight="bold"
         color={color}
         anchorX="center"
