@@ -1,42 +1,42 @@
 export const features = [
   {
-    title: 'Pluggable Registry',
-    description: 'LEGO-style modular architecture for instant scaling.',
-    icon: 'Layers',
-  },
-  {
     title: 'Gap Detection',
-    description: 'Proprietary engine that specs out its own technical solutions.',
+    description: 'Real-time analysis of user intent vs. available toolsets. Identifies capability gaps before failure.',
     icon: 'AlertTriangle',
   },
   {
-    title: 'Sovereignty',
-    description: 'On-System execution ensuring 100% data privacy and compliance.',
-    icon: 'Cpu',
-  },
-  {
-    title: 'Governance',
-    description: 'Human-in-the-loop system for secure enterprise-grade evolution.',
+    title: 'Human-Verified Autonomy',
+    description: 'Nothing reaches production without your sign-off. Maintain total control while automation accelerates.',
     icon: 'ShieldCheck',
   },
   {
-    title: 'Autonomous Workflows',
-    description: 'Let the system route tasks, resolve dependencies, and deliver outcomes with minimal human intervention.',
+    title: 'Continuous Improvement',
+    description: 'Your software grows more capable with every user interaction, reducing your development backlog.',
     icon: 'Zap',
   },
   {
-    title: 'Dynamic Orchestration',
-    description: 'Adapt workflow topology in real time as new capabilities appear and requirements evolve.',
-    icon: 'Repeat',
+    title: 'Self-Documenting & Self-Testing',
+    description: 'Every new feature comes with auto-generated documentation and comprehensive test suites.',
+    icon: 'FileText',
   },
   {
-    title: 'Production-Ready Infrastructure',
-    description: 'Built for reliability, observability, and fast iteration in enterprise-grade deployments.',
-    icon: 'ServerCog',
+    title: 'Autonomous Factory',
+    description: 'Architect, Developer, QA, and DevOps agents collaborate to ship code end-to-end.',
+    icon: 'Factory',
   },
   {
-    title: 'Scalable AI Systems',
-    description: 'Designed to grow with your business, from early proof of concept to global automation networks.',
-    icon: 'CloudDrizzle',
+    title: 'Beyond Static Prompts',
+    description: 'Traditional LLMs are limited by their tools. This system builds its own tools on demand.',
+    icon: 'Layers',
+  },
+  {
+    title: 'Data Sovereignty',
+    description: 'On-system execution ensures 100% data privacy. Your proprietary data never leaves your firewall.',
+    icon: 'Lock',
+  },
+  {
+    title: 'Enterprise-Grade Scale',
+    description: 'Designed for distributed teams, multi-agent workflows, and mission-critical reliability.',
+    icon: 'Building2',
   },
 ];

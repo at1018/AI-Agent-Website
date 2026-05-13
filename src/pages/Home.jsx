@@ -19,9 +19,9 @@ function Home() {
         <EnterpriseSection />
         <WorkflowSection />
         <SectionHeading
-          eyebrow="Why NovaMind"
-          title="Infrastructure intelligence built for enterprise evolution."
-          description="We transform brittle AI pipelines into a modular, self-healing platform that scales with business complexity."
+          eyebrow="The Three Core Pillars"
+          title="What makes self-evolution work"
+          description="Gap Detection • Human-Verified Autonomy • Continuous Improvement"
         />
         <div className="grid gap-4 sm:gap-6 lg:grid-cols-2 xl:grid-cols-3">
           {features.slice(0, 6).map((feature, index) => (
@@ -31,129 +31,124 @@ function Home() {
         <ProblemSolutionSection />
         <InvestorSection />
         <TeamSection />
+        
+        {/* Final CTA Section */}
+        <section id="cta" className="rounded-[24px] sm:rounded-[36px] border border-cyan-300/10 bg-gradient-to-r from-cyan-400/10 to-violet-500/10 p-6 sm:p-8 md:p-12 text-center shadow-soft backdrop-blur-xl">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-semibold text-white mb-3 sm:mb-4">Ready to Build Self-Evolving AI?</h2>
+          <p className="text-sm sm:text-base md:text-lg text-slate-300 mb-6 sm:mb-8 max-w-2xl mx-auto">
+            Stop managing static AI capabilities. Let your agent identify gaps and autonomously build solutions.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
+            <button className="inline-flex items-center justify-center rounded-2xl sm:rounded-3xl bg-gradient-to-r from-cyan-400 to-violet-500 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-slate-950 transition hover:brightness-110">
+              Scale Your AI's Intelligence Today
+              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+            </button>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-2xl sm:rounded-3xl border border-white/10 bg-white/5 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
+              View on GitHub
+            </a>
+          </div>
+        </section>
       </div>
     </div>
   );
 }
 
 function HeroSection() {
-  const [hoveredStep, setHoveredStep] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
-  const workflowSteps = [
+  const capabilityGapSteps = [
     {
-      name: 'Private Query Analysis',
-      description: 'Secure, local processing within your firewall.'
+      number: '1',
+      name: 'The Request',
+      description: 'A user asks for something outside the agent\'s current scope.'
     },
     {
-      name: 'Dynamic Tool Selection',
-      description: 'Orchestrates the best tools from your registry.'
+      number: '2',
+      name: 'Gap Identification',
+      description: 'Instead of "I can\'t do that," the agent logs a Capability Gap.'
     },
     {
-      name: 'Capability Gap Detection',
-      description: 'Identifies missing skills before failure occurs.'
+      number: '3',
+      name: 'Human Approval',
+      description: 'You receive a dashboard notification to review and approve the request.'
     },
     {
-      name: 'Self-Requirement Spec',
-      description: 'Generates technical blueprints for new tools.'
+      number: '4',
+      name: 'Autonomous Factory',
+      description: 'Coding, Testing, and Deploy agents collaborate to ship production-ready code.'
     },
     {
-      name: 'Human Gatekeeping',
-      description: '100% oversight with one-click tool approval.'
+      number: '5',
+      name: 'Fulfillment',
+      description: 'The agent notifies the user: "I can now handle that. Here\'s your result."'
     },
-    {
-      name: 'Automated Evolution',
-      description: 'Builds, tests, and deploys upgrades autonomously.'
-    }
   ];
 
   return (
     <section className="relative overflow-hidden rounded-[28px] sm:rounded-[40px] border border-white/10 bg-[#08101f]/90 p-4 sm:p-8 md:p-12 shadow-soft backdrop-blur-xl">
       <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-cyan-400/10 to-transparent" />
       <motion.div initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: 'easeOut' }}>
-        <div className="flex flex-col gap-6 lg:gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <div className="w-full lg:max-w-2xl space-y-4 sm:space-y-6">
+        <div className="flex flex-col gap-6 lg:gap-8">
+          <div className="w-full space-y-4 sm:space-y-6">
             <span className="inline-flex items-center gap-3 rounded-full border border-cyan-300/20 bg-white/5 px-3 py-2 sm:px-4 sm:py-2 text-xs sm:text-sm text-cyan-300">
               <CheckCircle2 className="h-4 w-4 text-cyan-300 flex-shrink-0" />
               Self-Evolving AI Infrastructure
             </span>
             <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.03em] sm:tracking-[-0.05em] text-white">
-              NovaMind: The World's First Self-Evolving AI Infrastructure.
+              The AI Agent that Builds Itself.
             </h1>
-            <p className="max-w-2xl text-base sm:text-lg md:text-lg leading-7 sm:leading-8 text-slate-300">
-              Stop building fragile AI bots. Deploy a private, modular agent that lives on your system, identifies its own capability gaps, and autonomously builds the tools it needs to scale.
+            <p className="max-w-3xl text-base sm:text-lg md:text-lg leading-7 sm:leading-8 text-slate-300">
+              Stop manually coding features. Your agent identifies its own limitations, triggers an autonomous development lifecycle, and deploys new capabilities—all while you maintain total control.
             </p>
             <div className="flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center">
               <button onClick={() => setShowModal(true)} className="hover-target inline-flex items-center justify-center rounded-2xl sm:rounded-3xl bg-gradient-to-r from-cyan-400 to-violet-500 px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-slate-950 transition hover:brightness-110">
-                View Investor Deck
+                See the Evolution in Action
                 <ArrowRight className="ml-2 h-3.5 w-3.5 sm:h-4 sm:w-4" />
               </button>
               <a href="#workflow" className="hover-target inline-flex items-center justify-center rounded-2xl sm:rounded-3xl border border-white/10 bg-white/5 px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm font-semibold text-white transition hover:border-cyan-300/40 hover:bg-white/10">
-                See Self-Evolution in Action
+                View the Agent Dashboard
               </a>
             </div>
           </div>
           
-          {/* Workflow Preview - Now visible on all screen sizes but with responsive sizing */}
-          <div className="relative w-full lg:w-full lg:max-w-[450px] mt-6 sm:mt-8 lg:mt-0">
-            <div className="absolute -left-8 top-8 h-20 w-20 sm:h-24 sm:w-24 rounded-full bg-cyan-400/10 blur-3xl" />
-            <div className="absolute right-8 top-24 h-20 w-20 sm:h-28 sm:w-28 rounded-full bg-violet-500/10 blur-3xl" />
-            <div className="rounded-[24px] sm:rounded-[36px] border border-white/10 bg-[#0b1425]/90 p-3 sm:p-6 shadow-soft backdrop-blur-xl">
-              <div className="space-y-3 sm:space-y-5">
-                <p className="text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] text-cyan-300/80 font-semibold">Live workflow preview</p>
-                <div className="rounded-2xl sm:rounded-3xl border border-white/10 bg-[#08101f]/95 p-3 sm:p-5 max-h-[400px] overflow-y-auto">
-                  <div className="space-y-2 sm:space-y-3">
-                    {workflowSteps.map((step, idx) => (
-                      <div
-                        key={idx}
-                        className="group relative"
-                        onMouseEnter={() => setHoveredStep(idx)}
-                        onMouseLeave={() => setHoveredStep(null)}
-                      >
-                        <div className="flex items-center gap-2 sm:gap-3 text-slate-200 cursor-pointer p-2 rounded-lg transition hover:bg-white/5">
-                          <span className="inline-flex h-7 w-7 sm:h-9 sm:w-9 items-center justify-center rounded-xl sm:rounded-2xl bg-cyan-400/10 text-cyan-300 flex-shrink-0 text-xs sm:text-sm font-semibold">{idx + 1}</span>
-                          <span className="text-xs sm:text-sm font-medium line-clamp-1 sm:line-clamp-2">{step.name}</span>
-                        </div>
-                        
-                        {/* Tooltip - Hidden on mobile, shown on hover on desktop */}
-                        {hoveredStep === idx && (
-                          <motion.div
-                            initial={{ opacity: 0, y: -8 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -8 }}
-                            transition={{ duration: 0.2 }}
-                            className="hidden sm:block absolute top-full left-0 mt-2 p-3 bg-slate-950 border border-cyan-400/30 rounded-lg shadow-lg z-50 w-56"
-                          >
-                            <p className="text-xs text-slate-300 leading-relaxed">{step.description}</p>
-                            <div className="absolute top-0 left-4 w-2 h-2 bg-slate-950 border-r border-b border-cyan-400/30 transform -translate-y-1 rotate-45" />
-                          </motion.div>
-                        )}
-                      </div>
-                    ))}
+          {/* Capability Gap Loop Visualization */}
+          <div className="mt-6 sm:mt-8 rounded-[24px] sm:rounded-[36px] border border-white/10 bg-[#0b1425]/90 p-4 sm:p-6 shadow-soft backdrop-blur-xl">
+            <p className="text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] text-cyan-300/80 font-semibold mb-4 sm:mb-6">The Capability Gap Loop</p>
+            <div className="grid gap-3 sm:gap-4 grid-cols-1 md:grid-cols-5">
+              {capabilityGapSteps.map((step, idx) => (
+                <div key={idx} className="relative">
+                  <div className="rounded-2xl sm:rounded-3xl border border-white/10 bg-[#08101f]/95 p-3 sm:p-4 text-center">
+                    <div className="inline-flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-full bg-gradient-to-r from-cyan-400 to-violet-500 text-white font-bold text-sm sm:text-base mb-2">
+                      {step.number}
+                    </div>
+                    <p className="text-xs sm:text-sm font-semibold text-white mb-1">{step.name}</p>
+                    <p className="text-xs text-slate-400 leading-4">{step.description}</p>
                   </div>
+                  {idx < capabilityGapSteps.length - 1 && (
+                    <div className="hidden md:block absolute top-1/2 -right-2 w-4 h-0.5 bg-gradient-to-r from-cyan-400 to-transparent" />
+                  )}
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </motion.div>
 
-      {/* Investor Deck Modal */}
+      {/* Demo Modal */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="relative max-w-md mx-4 rounded-[24px] border border-white/10 bg-[#08101f]/95 p-6 shadow-soft backdrop-blur-xl">
+          <div className="relative max-w-2xl mx-4 rounded-[24px] border border-white/10 bg-[#08101f]/95 p-6 shadow-soft backdrop-blur-xl">
             <button
               onClick={() => setShowModal(false)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white"
+              className="absolute top-4 right-4 text-slate-400 hover:text-white transition"
             >
               ✕
             </button>
-            <h3 className="text-lg font-semibold text-white mb-4">Investor Deck</h3>
-            <ul className="space-y-3 text-sm text-slate-300">
-              <li>• Market Opportunity: Disrupting the $250B AI Services industry with modular tech.</li>
-              <li>• Efficiency: 90% reduction in R&D costs via autonomous tool forging.</li>
-              <li>• Business Model: High-margin SaaS licensing + Tool Marketplace royalties.</li>
-            </ul>
+            <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4">Watch the Self-Evolution in Action</h3>
+            <div className="rounded-xl border border-white/10 bg-[#0a0f1a] p-6 text-center">
+              <p className="text-slate-300">Agent Dashboard Preview</p>
+              <p className="text-sm text-slate-400 mt-2">A demo showing real-time capability gap detection, human approval workflow, and autonomous feature deployment.</p>
+            </div>
           </div>
         </div>
       )}
@@ -167,12 +162,12 @@ function EnterpriseSection() {
       <div className="grid gap-4 sm:gap-6 md:gap-8 lg:grid-cols-[1fr_1.05fr] w-full">
         <div className="space-y-4 sm:space-y-6 md:space-y-8 min-w-0">
           <div className="space-y-2 sm:space-y-3 md:space-y-4">
-            <p className="text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.35em] text-cyan-300/80 font-semibold line-clamp-2 sm:line-clamp-none">ENTERPRISE AI THAT STAYS YOURS.</p>
+            <p className="text-xs sm:text-sm uppercase tracking-[0.15em] sm:tracking-[0.2em] md:tracking-[0.35em] text-cyan-300/80 font-semibold line-clamp-2 sm:line-clamp-none">The Agentic Factory</p>
             <h2 className="text-xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-[-0.01em] sm:tracking-[-0.02em] md:tracking-[-0.04em] text-white leading-tight sm:leading-normal">
-              Every company says they want AI.
+              From Capability Gap to Production Feature
             </h2>
             <p className="text-sm sm:text-base md:text-lg leading-6 sm:leading-7 md:leading-8 text-slate-300">
-              Until they realize it means sending sensitive company data to someone else&apos;s servers. That&apos;s where most enterprise AI conversations quietly die.
+              When the system identifies a gap, specialized agents collaborate autonomously to design, build, test, and deploy new capabilities—all with human oversight.
             </p>
           </div>
 
@@ -302,9 +297,9 @@ function WorkflowSection() {
   return (
     <section id="workflow" className="space-y-6 sm:space-y-8">
       <SectionHeading
-        eyebrow="AI workflow prototype"
-        title="Visualize how the platform senses, routes, and evolves intelligence in real time."
-        description="Watch the agent ingest a query, attach tools, detect gaps, and upgrade itself all within a single infrastructure flow."
+        eyebrow="How It Works"
+        title="The Self-Evolution Loop: From Gap to Growth"
+        description="Watch the agent detect a missing capability, trigger human approval, and autonomously build the solution. This is how AI becomes smarter every day."
       />
       <div className="relative">
         <div className="absolute inset-0 rounded-[24px] sm:rounded-[36px] border border-cyan-300/10" />
@@ -333,9 +328,9 @@ function ProblemSolutionSection() {
     <section className="grid gap-6 sm:gap-10 lg:grid-cols-[1.05fr_0.95fr]">
       <div className="rounded-[24px] sm:rounded-[36px] border border-white/10 bg-[#08101f]/90 p-4 sm:p-8 shadow-soft backdrop-blur-xl">
         <SectionHeading
-          eyebrow="Traditional AI problems"
-          title="What blocks modern intelligence stacks today"
-          description="Most systems are built for narrow tasks and fail the moment complexity or scale demands flexibility."
+          eyebrow="The Challenge"
+          title="Why traditional AI hits a wall"
+          description="Most AI systems are static. When users ask for something new, the system fails—and nothing improves."
         />
         <div className="mt-6 sm:mt-8 grid gap-3 sm:gap-4">
           {problems.map((item) => (
@@ -348,9 +343,9 @@ function ProblemSolutionSection() {
       </div>
       <div className="rounded-[24px] sm:rounded-[36px] border border-white/10 bg-[#08101f]/90 p-4 sm:p-8 shadow-soft backdrop-blur-xl">
         <SectionHeading
-          eyebrow="Our solution"
-          title="A platform designed to expand and improve autonomously"
-          description="Instead of static components, NovaMind orchestrates and evolves itself through modular intelligence."
+          eyebrow="Our Answer"
+          title="Self-evolution through gap detection"
+          description="When a capability gap is detected, humans approve it, and agents autonomously build the solution."
         />
         <div className="mt-6 sm:mt-8 grid gap-3 sm:gap-4">
           {solutions.map((item) => (
@@ -369,9 +364,9 @@ function InvestorSection() {
   return (
     <section className="rounded-[24px] sm:rounded-[36px] border border-white/10 bg-[#07101b]/90 p-4 sm:p-8 shadow-soft backdrop-blur-xl">
       <SectionHeading
-        eyebrow="Investor insight"
-        title="The future of AI is infrastructure that learns and grows automatically."
-        description="Position your investment around scalable orchestration, enterprise automation, and continuously improving capabilities."
+        eyebrow="Why it Matters"
+        title="The economics of autonomous capability growth"
+        description="Every user failure becomes your roadmap. Every gap closed reduces development backlog. The more your agent is used, the smarter it becomes."
       />
       <div className="mt-6 sm:mt-10">
         <h3 className="text-lg font-semibold text-white mb-4">Cost Comparison</h3>
@@ -430,34 +425,6 @@ function TeamSection() {
         ))}
       </div>
     </section>
-  );
-
-  return (
-    <div className="relative overflow-hidden px-3 sm:px-6 pb-16 sm:pb-24 pt-[100px] sm:pt-[120px] lg:pt-[140px]">
-      <div className="mx-auto flex max-w-7xl flex-col gap-10 sm:gap-14 md:gap-16">
-        <HeroSection />
-        <EnterpriseSection />
-        <WorkflowSection />
-        <SectionHeading
-          eyebrow="Why NovaMind"
-          title="Infrastructure intelligence built for enterprise evolution."
-          description="We transform brittle AI pipelines into a modular, self-healing platform that scales with business complexity."
-        />
-        <div className="grid gap-4 sm:gap-6 lg:grid-cols-2 xl:grid-cols-3">
-          {features.slice(0, 6).map((feature, index) => (
-            <FeatureCard key={feature.title} {...feature} index={index + 1} />
-          ))}
-        </div>
-        <ProblemSolutionSection />
-        <InvestorSection />
-        <TeamSection />
-
-        {/* Security & Trust Badge */}
-        <div className="mt-8 rounded-[20px] sm:rounded-[32px] border border-cyan-300/10 bg-white/5 p-4 sm:p-6 text-center">
-          <p className="text-sm sm:text-base font-semibold text-cyan-300">Enterprise Ready: NovaMind runs on your system. Your proprietary data never leaves your firewall.</p>
-        </div>
-      </div>
-    </div>
   );
 }
 

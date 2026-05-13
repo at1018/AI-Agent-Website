@@ -3,9 +3,10 @@ import { Link, NavLink } from 'react-router-dom';
 import { Menu, X, Sparkles } from 'lucide-react';
 
 const navItems = [
-  { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'How it Works', href: '#workflow' },
+  { label: 'Documentation', href: '#features' },
+  { label: 'GitHub', href: 'https://github.com' },
+  { label: 'Demo', href: '#cta' },
 ];
 
 function NavBar({ scrollY }) {
